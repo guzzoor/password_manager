@@ -1,4 +1,5 @@
 import random
+import bcrypt 
 
 class PasswordCreator:
   
@@ -15,5 +16,13 @@ class PasswordCreator:
       password = password + word
     return password
 
-p = PasswordCreator()
-print(p.createXKCD())
+  # Needs to be of byte type, therefor encode
+  def bcrypt_pwd(self, pw):
+    return bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())
+
+
+pc = PasswordCreator()
+password = pc.createXKCD()
+print("password before encryption: " + password)
+pencr = pc.bcrypt_pwd(password)
+print("password after encryption: " + pencr.decode())
